@@ -1,7 +1,13 @@
-import './style.css';
-import message from './index.html';
+import { initChatListener } from "./modules/register_chat";
+import { initNpcManager } from "./ui/npc_manager/ui";
+import { initLocations } from "./ui/locations/ui";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const { Popup } = (globalThis as any).SillyTavern.getContext();
+(async() =>{
+console.log("[NPC Engine] Initializing Extension UI")
 
-Popup.show.text(message);
+initChatListener();
+initNpcManager();
+initLocations();
+
+
+})();

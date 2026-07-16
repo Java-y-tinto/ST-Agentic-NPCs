@@ -7,12 +7,16 @@
         "strict": true,
         "esModuleInterop": true,
         "sourceMap": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "checkJs": false,
     },
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx",
-        "globals.d.ts"
+        "globals.d.ts",
+        ".st-types/**/*.js",
+        ".st-types/**/*.d.ts"
     ],
     "exclude": [
         "node_modules",

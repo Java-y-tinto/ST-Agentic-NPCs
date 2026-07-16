@@ -1,0 +1,54 @@
+<div class="npc-engine-settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header">
+            <b>Agentic NPCs</b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+        <div class="inline-drawer-content">
+            <small class="npc-engine-world">World: <span id="npc_engine_world_id">no active chat</span></small>
+
+            <div id="npc_engine_list" class="npc-engine-list"></div>
+            <div id="npc_engine_empty" class="npc-engine-empty">No NPCs yet. Create one to bring your world to life.</div>
+
+            <div id="npc_engine_add" class="menu_button" title="Create a new NPC in this world">
+                <i class="fa-solid fa-plus"></i> New NPC
+            </div>
+
+            <form id="npc_engine_form" class="npc-engine-form" hidden>
+                <label for="npc_form_name">Name</label>
+                <input id="npc_form_name" class="text_pole" type="text" required maxlength="80" placeholder="Mira" autocomplete="off">
+                <small id="npc_form_slug" class="npc-engine-slug"></small>
+
+                <label for="npc_form_tier">Importance tier</label>
+                <select id="npc_form_tier" class="text_pole">
+                    <option value="minor">Minor — background, heuristics only</option>
+                    <option value="secondary" selected>Secondary — reflects and replans</option>
+                    <option value="major">Major — full autonomy</option>
+                </select>
+
+                <label for="npc_form_traits">Core traits</label>
+                <input id="npc_form_traits" class="text_pole" type="text" placeholder="blacksmith, proud, loyal to the guild" autocomplete="off">
+
+                <label for="npc_form_backstory">Backstory / lore</label>
+                <textarea id="npc_form_backstory" class="text_pole" rows="4" placeholder="Free-form background the NPC starts with"></textarea>
+
+                <label for="npc_form_location">Starting location</label>
+                <select id="npc_form_location" class="text_pole">
+                    <option value="">(none)</option>
+                </select>
+
+                <label for="npc_form_triggers">Triggers <small>(comma-separated keywords that inject this NPC)</small></label>
+                <input id="npc_form_triggers" class="text_pole" type="text" placeholder="Mira, forge, smithy" autocomplete="off">
+
+                <div id="npc_form_error" class="npc-engine-error" hidden></div>
+
+                <div class="flex-container">
+                    <button type="submit" class="menu_button">Create NPC</button>
+                    <button type="button" id="npc_form_cancel" class="menu_button">Cancel</button>
+                </div>
+            </form>
+
+            <div id="npc_engine_locations_mount"></div>
+        </div>
+    </div>
+</div>

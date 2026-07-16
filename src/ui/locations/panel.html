@@ -1,0 +1,28 @@
+<div class="npc-engine-locations">
+    <hr>
+    <b>World Locations</b>
+    <small class="npc-engine-world">Places your NPCs can be at. Keep descriptions short.</small>
+
+    <div id="loc_list" class="npc-engine-list"></div>
+    <div id="loc_empty" class="npc-engine-empty">No locations yet.</div>
+
+    <div id="loc_add" class="menu_button" title="Add a location to this world">
+        <i class="fa-solid fa-plus"></i> New Location
+    </div>
+
+    <form id="loc_form" class="npc-engine-form" hidden>
+        <label for="loc_form_name">Name</label>
+        <input id="loc_form_name" class="text_pole" type="text" required maxlength="80" placeholder="The Forge" autocomplete="off">
+        <small id="loc_form_slug" class="npc-engine-slug"></small>
+
+        <label for="loc_form_desc">Description</label>
+        <textarea id="loc_form_desc" class="text_pole" rows="2" placeholder="Where Mira works"></textarea>
+
+        <div id="loc_form_error" class="npc-engine-error" hidden></div>
+
+        <div class="flex-container">
+            <button type="submit" class="menu_button">Create Location</button>
+            <button type="button" id="loc_form_cancel" class="menu_button">Cancel</button>
+        </div>
+    </form>
+</div>
