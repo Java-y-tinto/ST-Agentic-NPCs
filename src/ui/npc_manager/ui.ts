@@ -39,6 +39,7 @@ export function initNpcManager() {
     const backstoryInput = panel.querySelector('#npc_form_backstory') as HTMLTextAreaElement;
     const locationSelect = panel.querySelector('#npc_form_location') as HTMLSelectElement;
     const triggersInput = panel.querySelector('#npc_form_triggers') as HTMLInputElement;
+    const statsInput = panel.querySelector('#npc_form_stats') as HTMLTextAreaElement;
     const errorBox = panel.querySelector('#npc_form_error') as HTMLElement;
 
     function showError(message: string) {
@@ -93,7 +94,7 @@ export function initNpcManager() {
             return;
         }
         try {
-            const res = await callBackend(`/npc-engine/agents?world=${encodeURIComponent(worldId)}`);
+            const res = await callBackend(`npc-engine/agents?world=${encodeURIComponent(worldId)}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             renderList((await res.json()) as Npc[]);
         } catch (error) {
@@ -106,7 +107,7 @@ export function initNpcManager() {
     async function loadLocations(worldId: string) {
         locationSelect.replaceChildren(new Option('(none)', ''));
         try {
-            const res = await callBackend(`/npc-engine/worlds/${encodeURIComponent(worldId)}/locations`);
+            const res = await callBackend(`npc-engine/worlds/${encodeURIComponent(worldId)}/locations`);
             if (!res.ok) return;
             const locations = (await res.json()) as { id: string, name: string }[];
             for (const loc of locations) {
@@ -151,6 +152,21 @@ export function initNpcManager() {
             return;
         }
 
+        const stats: Record<string, string | number> = {};
+        for (const line of statsInput.value.split('\n')) {
+            const colon = line.indexOf(':');
+            const key = colon > 0 ? line.slice(0, colon).trim() : '';
+            if (!key) {
+                if (line.trim()) {
+                    showError(`Stat line "${line.trim()}" must look like "key: value".`);
+                    return;
+                }
+                continue;
+            }
+            const raw = line.slice(colon + 1).trim();
+            stats[key] = raw !== '' && !isNaN(Number(raw)) ? Number(raw) : raw;
+        }
+
         const payload = {
             worldId,
             id,
@@ -160,10 +176,11 @@ export function initNpcManager() {
             backstory: backstoryInput.value.trim(),
             location: locationSelect.value || null,
             triggers: triggersInput.value.split(',').map(t => t.trim()).filter(Boolean),
+            stats,
         };
 
         try {
-            const res = await callBackend('/npc-engine/agents', {
+            const res = await callBackend('npc-engine/agents', {
                 method: 'POST',
                 body: JSON.stringify(payload),
             });

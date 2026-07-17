@@ -74,7 +74,8 @@ export function initLocations() {
             return;
         }
         try {
-            const res = await callBackend(`/npc-engine/worlds/${encodeURIComponent(worldId)}/locations`);
+            // Prevent the front from caching, so it refreshes the screen
+            const res = await callBackend(`npc-engine/worlds/${encodeURIComponent(worldId)}/locations?t=${Date.now()}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             renderList((await res.json()) as Location[]);
         } catch (error) {
@@ -116,7 +117,7 @@ export function initLocations() {
         }
 
         try {
-            const res = await callBackend(`/npc-engine/worlds/${encodeURIComponent(worldId)}/locations`, {
+            const res = await callBackend(`npc-engine/worlds/${encodeURIComponent(worldId)}/locations`, {
                 method: 'POST',
                 body: JSON.stringify({ id, name, description: descInput.value.trim() }),
             });
