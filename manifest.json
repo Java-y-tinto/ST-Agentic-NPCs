@@ -4,6 +4,7 @@
     "requires": [],
     "optional": [],
     "js": "dist/index.js",
+    "generate_interceptor": "npcEngineInterceptor",
     "css": "",
     "author": "Jug",
     "version": "1.0.0",

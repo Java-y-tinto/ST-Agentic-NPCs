@@ -41,6 +41,21 @@
     text-transform: capitalize;
 }
 
+.npc-engine-delete {
+    margin-left: auto;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.npc-engine-tier + .npc-engine-delete {
+    margin-left: 0; /* tier already pushes right */
+}
+
+.npc-engine-delete:hover {
+    opacity: 1;
+    color: var(--warning, #e45c5c);
+}
+
 .npc-engine-details {
     display: flex;
     flex-direction: column;

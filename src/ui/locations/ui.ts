@@ -44,7 +44,14 @@ export function initLocations() {
             const summary = document.createElement('summary');
             const name = document.createElement('span');
             name.textContent = loc.name;
-            summary.append(name);
+            const del = document.createElement('i');
+            del.classList.add('fa-solid', 'fa-trash-can', 'npc-engine-delete');
+            del.title = 'Delete location';
+            del.addEventListener('click', (e) => {
+                e.preventDefault(); // don't toggle the <details>
+                deleteLocation(loc);
+            });
+            summary.append(name, del);
 
             const info = document.createElement('div');
             info.classList.add('npc-engine-details');
@@ -64,6 +71,24 @@ export function initLocations() {
             row.append(summary, info);
             list.append(row);
         }
+    }
+
+    async function deleteLocation(loc: Location) {
+        if (!confirm(`Delete ${loc.name}?`)) return;
+        const worldId = getActiveWorldId();
+        if (!worldId) return;
+        try {
+            const res = await callBackend(`npc-engine/worlds/${encodeURIComponent(worldId)}/locations`, {
+                method: 'DELETE',
+                body: JSON.stringify({ id: loc.id }),
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            toast(`${loc.name} deleted.`, 'success');
+        } catch (error) {
+            console.error('[NPC ENGINE] Failed to delete location', error);
+            toast('Failed to delete location.', 'error');
+        }
+        await refresh();
     }
 
     async function refresh() {
